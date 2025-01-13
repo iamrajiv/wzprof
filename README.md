@@ -15,6 +15,13 @@ you might enjoy reading:
 
 👉 [**Performance in the spotlight: WebAssembly profiling for everyone**](https://blog.stealthrocket.tech/performance-in-the-spotlight-webassembly-profiling-for-everyone)
 
+We have presented this project at international conferences, such as:
+
+- **[Civo Navigate Europe 2024](https://www.youtube.com/watch?v=9fxMbaHSSiI)**
+  > slides: [https://github.com/iamrajiv/civo-navigate-europe-2024](https://github.com/iamrajiv/civo-navigate-europe-2024)
+- **[KubeCon + CloudNativeCon India 2024](https://www.youtube.com/watch?v=LaQZVxOixGY)**
+  > slides: [https://github.com/iamrajiv/kubecon-cloudnativecon-india-2024](https://github.com/iamrajiv/kubecon-cloudnativecon-india-2024)
+
 ## Motivation
 
 WebAssembly runtimes typically allow profiling guest code via an external
@@ -50,20 +57,23 @@ You can either use `wzprof` as a CLI or as a library if you use the Wazero
 runtime libraries.
 
 To install the latest version of `wzprof`:
+
 ```sh
 go install github.com/stealthrocket/wzprof/cmd/wzprof@latest
 ```
+
 To use the library as code in a Go program:
+
 ```sh
 go get github.com/stealthrocket/wzprof@latest
 ```
 
-### Sampling 
+### Sampling
 
 By default, wzprof will sample calls with a ratio of 1/19. Sampling is used to
-limit the overhead of the profilers but the default rate might not be suitable 
-in some cases. 
-For example, if your processes are short running and you don't see anything in the 
+limit the overhead of the profilers but the default rate might not be suitable
+in some cases.
+For example, if your processes are short running and you don't see anything in the
 profile, you might want to disable the sampling. To do so, use `-sample 1`.
 
 ### Run program to completion with CPU or memory profiling
@@ -74,9 +84,11 @@ test programs complete quickly.
 ```sh
 wzprof -sample 1 -memprofile /tmp/profile ./testdata/c/simple.wasm
 ```
+
 ```sh
 wzprof -sample 1 -cpuprofile /tmp/profile ./testdata/c/crunch_numbers.wasm
 ```
+
 ```sh
 go tool pprof -http :4000 /tmp/profile
 ```
@@ -89,16 +101,18 @@ can expose a pprof-compatible http endpoint on behalf of the guest application:
 ```sh
 wzprof -pprof-addr :8080 ...
 ```
+
 ```sh
 go tool pprof -http :3030 'http://localhost:8080/debug/pprof/profile?seconds=5'
 ```
+
 ```sh
 go tool pprof -http :3030 'http://localhost:8080/debug/pprof/heap'
 ```
 
 ## Profilers
 
-⚠️  The `wzprof` Go APIs depend on Wazero's `experimental` package which makes no
+⚠️ The `wzprof` Go APIs depend on Wazero's `experimental` package which makes no
 guarantees of backward compatilbity!
 
 The following code snippet demonstrates how to integrate the profilers to a
@@ -217,7 +231,6 @@ reloading modules may result in an incorrect profile. If that's a problem for
 you please file an issue in the github tracker.
 
 [timecraft-python]: https://docs.timecraft.dev/getting-started/prep-application/compiling-python#preparing-python
-
 
 ### DWARF (C, Rust, Zig...)
 
